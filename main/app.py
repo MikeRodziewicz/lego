@@ -1,20 +1,33 @@
 
 """
-Start of the home app running on the RpiZero
-
+Initialize LEGO app and provide FastAPI object.
 """
 
-import uvicorn
+from fastapi import FastAPI
+from sqlalchemy.orm import Session
+
+from .models.parts import Base, LegoPart
+
+from .db.database import SessionLocal, engine
 
 
-def run_local():
-    uvicorn.run(
-        "app.main:app",
-        reload=True,
-        host="0.0.0.0",
-        port=8000
-    )
+Base.metadata.create_all(bind=engine)
 
 
-if __name__ == "__main__":
-    run_local()
+app = FastAPI()
+
+
+def get_db():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+
+
+@app.get("/")
+def root():
+    return {"response": "OK"}
+
+
+
