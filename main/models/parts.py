@@ -4,7 +4,7 @@ Basic part models.
 
 from sqlalchemy import Column, Integer, String
 
-from main.db.database import Base
+from .base import Base
 
 
 class LegoPart(Base):

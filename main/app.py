@@ -4,30 +4,23 @@ Initialize LEGO app and provide FastAPI object.
 """
 
 from fastapi import FastAPI
-from sqlalchemy.orm import Session
 
-from .models.parts import Base, LegoPart
+from .core.database import engine
+from .models.base import Base 
+from .routes.status_check import status_check_router
 
-from .db.database import SessionLocal, engine
 
-
+# DB models setup phase
 Base.metadata.create_all(bind=engine)
 
 
-app = FastAPI()
+# FastAPI object creation
+app = FastAPI(
+    title="LEGO DEV",
+    debug=True,
+)
 
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
-
-
-@app.get("/")
-def root():
-    return {"response": "OK"}
+app.include_router(status_check_router)
 
 
 
