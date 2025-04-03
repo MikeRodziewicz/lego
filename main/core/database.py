@@ -2,7 +2,7 @@
 Main module for database configuration and setup.
 """
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session 
+from sqlalchemy.orm import Session
 
 
 DATABASE_URL = "sqlite:///./lego.db"
