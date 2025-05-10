@@ -1,9 +1,7 @@
-
 """
 Start of the home app running on the RpiZero
 
 """
-
 import uvicorn
 
 

@@ -13,5 +13,9 @@ def get_records(db_session: Session) -> list:
     return records
 
 def insert_record(db_session: Session, lego_part: LegoPartDTO) -> None:
-    part = LegoPart(**lego_part)
+    prt_one = LegoPartDTO.model_dump(lego_part)
+    print(prt_one)
+    part = LegoPart(**prt_one)
+    print(part)
     db_session.add(part)
+    db_session.commit()

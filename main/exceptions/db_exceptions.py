@@ -2,8 +2,6 @@
 All custom exceptions related to the DB operaions.
 """
 
-
-
 class BaseDBException(Exception):
     """Base Custom exception for failed DB operations."""
 
@@ -22,3 +20,4 @@ class NoRecordFoundDBException(BaseDBException):
     def __init__(self, *args: object) -> None:
         args = args if args else (self._default_msg,)
         super().__init__(*args)
+
