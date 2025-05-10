@@ -1,20 +1,29 @@
 
 """
-Start of the home app running on the RpiZero
-
+Initialize LEGO app and provide FastAPI object.
 """
+from contextlib import asynccontextmanager
 
-import uvicorn
+from fastapi import FastAPI
 
-
-def run_local():
-    uvicorn.run(
-        "app.main:app",
-        reload=True,
-        host="0.0.0.0",
-        port=8000
-    )
+from .core.database import engine
+from .models.base import Base
+from .routes.status_check import status_check_router
 
 
-if __name__ == "__main__":
-    run_local()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(
+    title="LEGO DEV",
+    debug=True,
+    lifespan=lifespan
+)
+
+app.include_router(status_check_router)
+
+
+

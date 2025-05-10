@@ -1,0 +1,2 @@
+test_insert_part:
+ - test_part: {"lego_id": 12, "part_name": "test_part"}
